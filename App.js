@@ -9,13 +9,17 @@ export default function App() {
 
   const [test, setTest] = React.useState("");
 
-  const [view, setView] = React.useState("login");
+  const [view, setView] = React.useState("patient");
+
 
   function loginAttempt() {
     if (username === "sally_su") {
       setTest("logged in as patient");
       setView("patient");
-    } else {
+    } else if (username === "benson_lash") {
+      setView("manager");
+    }
+    else {
       setTest("incorrect username/password");
     }
   }
@@ -67,7 +71,7 @@ export default function App() {
         <Button mode='contained' style={{ borderRadis: '10', width: '55%', height: '70%', backgroundColor: '#c5d7c9', marginTop: "5%"}}>
           <Text variant="titleMedium" style={{ fontWeight: 'bold', color: 'white' }}> Pay Now </Text>
           </Button>
-          <IconButton color="#023020" icon="arrow-right" size={45} style={{marginTop:"-17%"}}/>
+          <IconButton color="#023020" icon="arrow-right" size={45} style={{marginTop:"-17%"}} onPress={() => {setView("login")}}/>
         <Text />
       </View>
       
@@ -86,6 +90,74 @@ export default function App() {
     </View>
 
   }
+
+{ view == "manager" &&
+    <View style={styles.mainView}> 
+    <View style={styles.TopView2}>
+
+        <Image source={require('./assets/mainlogo.png')} style={styles.logoCorner} />
+        <Image source={require('./assets/guardian-title.png')} style={styles.Header2} />
+
+        <Image source={require('./assets/report.png')} style={styles.reportTitle} />
+
+        <View style={styles.Report}>
+        <Text variant="titleMedium" style={{ alignSelf: 'center', alignItems: 'center', color:'black', fontSize:25, fontWeight: '500', marginTop: "-2%" }}>
+          Account Balance: $1,098.99 
+        </Text>
+        <Text variant="titleMedium" style={{ alignSelf: 'center', alignItems: 'center', color:'black', fontSize:20, fontWeight: '450', marginTop: "5%" }}>
+          Total Spendings: $444.11 {"\n"}
+          Weekly Balance left to spend: $450 
+        </Text>
+        <Button mode='contained' style={{ borderRadis: '10', width: '55%', height: '30%', backgroundColor: '#c5d7c9', marginTop: "5%"}}>
+          <Text variant="titleMedium" style={{ fontWeight: 'bold', color: 'white' }}> Edit Account </Text>
+          </Button>
+        <Text />
+      </View>
+
+      <Image source={require('./assets/transaction-title.png')} style={styles.transactionTitle} />
+
+      <View style={styles.Transactions}>
+        <View style={{display: "flex", flexDirection: "row", flexWrap: "wrap", alignItems: 'flex-start'}}>
+              <View style={{width: "50%"}}>
+                <Text style={{ color: '#3c7148', fontWeight:'bold'}}>TD Bank Transfer</Text>
+              </View>
+              <View style={styles.splitAmountItem}>
+                <Text style={{ color: '#3c7148', textAlign: 'right', paddingLeft: 100, fontWeight: 'bold' }}>+210.00</Text>
+                <Text style={{ color: '#000', textAlign: 'right' }}>19 Nov 2022</Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.Transactions}>
+            <View style={{display: "flex", flexDirection: "row", flexWrap: "wrap", alignItems: 'flex-start'}}>
+              <View style={{width: "50%"}}>
+                <Text style={{ color: '#3c7148',fontWeight:'bold' }}>Target</Text>
+              </View>
+              <View style={styles.splitAmountItem}>
+                <Text style={{ color: '#F06363', textAlign: 'right', paddingLeft: 100, fontWeight: 'bold' }}>-62.30</Text>
+                <Text style={{ color: '#000', textAlign: 'right' }}>19 Nov 2022</Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.Transactions}>
+            <View style={{display: "flex", flexDirection: "row", flexWrap: "wrap", alignItems: 'flex-start'}}>
+              <View style={{width: "50%"}}>
+                <Text style={{ color: '#3c7148', fontWeight:'bold' }}>Jay's Convenience</Text>
+              </View>
+              <View style={styles.splitAmountItem}>
+                <Text style={{ color: '#F06363', textAlign: 'right', paddingLeft: 100, fontWeight: 'bold' }}>-$8.98</Text>
+                <Text style={{ color: '#000', textAlign: 'right' }}>19 Nov 2022</Text>
+              </View>
+            </View>
+          </View>
+
+    </View>
+      <View style={styles.Footer}>
+      </View>
+    </View>
+}
+
     </PaperProvider>
   );
 }
@@ -244,6 +316,50 @@ const styles = StyleSheet.create({
       shadowOffset: { width: 0, height: 1 },
       shadowOpacity: 0.2,
       shadowRadius: 4,
-    }
+    },
+
+    //
+
+    reportTitle: {
+      width: '70%',
+      resizeMode:'contain',
+      marginRight:10,
+      marginTop: -60
+    },
+    transactionTitle: {
+      width: '70%',
+      resizeMode:'contain',
+      marginRight:10,
+      marginBottom: -40,
+      marginTop: -50
+    },
+    Transactions: {
+      display: 'flex',
+      width: '92%',
+      height: 'auto',
+      backgroundColor: 'white',
+      borderRadius: 5,
+      marginTop: 15,
+      padding: 10,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.8,
+      shadowRadius: 4,
+      elevation: 5
+    },
+    Report: {
+      display: 'flex',
+      width: '92%',
+      height: '22%',
+      backgroundColor: 'white',
+      borderRadius: 5,
+      marginBottom: 70,
+      padding: 25,
+      alignSelf: 'center',
+      alignItems: 'center',
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.2,
+      shadowRadius: 4,
+    },
 
 });
