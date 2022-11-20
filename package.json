@@ -18,6 +18,9 @@
     "url": "https://github.com/dina-o/metrohacks/issues"
   },
   "homepage": "https://github.com/dina-o/metrohacks#readme",
+  "engines": {
+    "node": ">=6.9.0"
+  },
   "dependencies": {
     "@babel/core": "^7.20.2",
     "@babel/plugin-proposal-class-properties": "^7.18.6",

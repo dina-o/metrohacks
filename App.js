@@ -1,16 +1,13 @@
 import * as React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Image, View, Touchable, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image, View, Touchable, TouchableWithoutFeedback } from 'react-native';
 import { Button, Provider as PaperProvider, Text, TextInput, IconButton } from 'react-native-paper';
 
 export default function App() {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
-
   const [test, setTest] = React.useState("");
-
-  const [view, setView] = React.useState("patient");
-
+  const [view, setView] = React.useState("patient");  // which page expo loads first on
 
   function loginAttempt() {
     if (username === "sally_su") {
@@ -88,7 +85,6 @@ export default function App() {
       <View style={styles.Footer}>
       </View>
     </View>
-
   }
 
 { view == "manager" &&
