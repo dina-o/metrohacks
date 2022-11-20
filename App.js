@@ -172,10 +172,19 @@ export default function App() {
       }
 
       {view == "success" &&
-        <TouchableWithoutFeedback onPress={() => { setView("hold") }}>
+        <TouchableWithoutFeedback onPress={() => { setView("unsuccessfull") }}>
           <View style={styles.SuccessContainer}>
             <Text style={{ fontWeight: 'bold', textAlign: 'center', color: "black", fontSize: "18" }} >Payment Successful!</Text>
             <IconButton color="#000" icon="check" size={45} style={{marginTop:"10%"}}/>
+          </View>
+        </TouchableWithoutFeedback>
+      }
+
+    {view == "unsuccessfull" &&
+        <TouchableWithoutFeedback onPress={() => { setView("hold") }}>
+          <View style={styles.noSuccessContainer}>
+            <Text style={{ fontWeight: 'bold', textAlign: 'center', color: "black", fontSize: "16" }} >Payment Unsuccessful !!! {"\n"}...{"\n"}{"\n"} Your guardian has declined this payment. {"\n"} It is more than your current credit!</Text>
+            <IconButton color="#000" icon="alert" size={45} style={{marginTop:"10%"}}/>
           </View>
         </TouchableWithoutFeedback>
       }
@@ -421,6 +430,18 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       textAlign: 'center',
       backgroundColor: "#5f967c"
-    } 
+    },
+    noSuccessContainer: {
+      display: 'flex',
+      marginTop: 'auto',
+      marginBottom: 'auto',
+      paddingLeft: '10%',
+      paddingTop: '110%',
+      paddingBottom: '100%',
+      paddingRight: '10%',
+      alignItems: 'center',
+      textAlign: 'center',
+      backgroundColor: "#b2554d"
+    }
 
 });
