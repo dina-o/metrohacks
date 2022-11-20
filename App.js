@@ -10,6 +10,70 @@ export default function App() {
   const [test, setTest] = React.useState("");
   const [view, setView] = React.useState("login");  // which page expo loads first
 
+  // API CALLS --------
+  const getWeeklyLimit = () => {
+    fetch('https://ht6-heimwallet.herokuapp.com/get_weekly_limit?patient=fjones')
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
+        setWeeklyLimit(json.weekly_limit);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const getRemainingWeeklyLimit = () => {
+    fetch('https://ht6-heimwallet.herokuapp.com/get_remaining_weekly_limit?patient=fjones')
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
+        setRemainingWeeklyLimit(json.remaining_spend_limit);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const getManagedBalance = () => {
+    fetch('https://metrohacks.com/get_managed_balance?patient=ssu')
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
+        setManagedBalance(json.managed_balance);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const makePurchase = () => {
+    fetch(`https://metrohacks.com/make_purchase?patient=ssu&price=${transactionAmount}`)
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const checkForAuth = () => {
+    fetch('https://ht6-metrohacks.com/check_for_auth?patient=ssu')
+      .then(response => response.json())
+      .then(json => {
+        if (json.status === "approved") {
+          setPaymentApproved(true);
+        } else {
+          setPaymentApproved(false);
+        }
+        console.log(json);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   function loginAttempt() {
     if (username === "sally_su" && password === "1234") {
       setTest("logged in as patient");
@@ -20,6 +84,23 @@ export default function App() {
     else {
       setTest("incorrect username/password");
     }
+  }
+
+  if (view === "patient") {
+    getWeeklyLimit();
+    getRemainingWeeklyLimit();
+  } else if (view === "hold") {
+    makePurchase();
+  } else if (view === "await") {
+    checkForAuth();
+  } else if (view === "success") {
+    checkForAuth();
+  }
+
+  else if (view === "manager") {
+    getWeeklyLimit();
+    getRemainingWeeklyLimit();
+    getManagedBalance();
   }
 
   return (
@@ -103,7 +184,7 @@ export default function App() {
         </Text>
         <Text variant="titleMedium" style={{ alignSelf: 'center', alignItems: 'center', color:'black', fontSize:20, fontWeight: '450', marginTop: "5%" }}>
           Total Spendings: $444.11 {"\n"}
-          Weekly Balance left to spend: $450 
+          Weekly Balance left to spend: ${remainingWeeklyLimit} 
         </Text>
         <Button mode='contained' style={{ borderRadis: '10', width: '55%', height: '30%', backgroundColor: '#c5d7c9', marginTop: "5%"}}>
           <Text variant="titleMedium" style={{ fontWeight: 'bold', color: 'white' }}> Edit Account </Text>
