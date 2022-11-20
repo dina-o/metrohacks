@@ -50,7 +50,7 @@ def get_weekly_spend_limit():
     spend_limit = get_patient_record(patient)["weekly_spend_limit"]
     formatted_spend_limit = "{:.2f}".format(spend_limit)
 
-    return Response(f"{{\"daily_limit\": {formatted_spend_limit}}}", status=200, mimetype='application/json')
+    return Response(f"{{\"weekly_limit\": {formatted_spend_limit}}}", status=200, mimetype='application/json')
 
 # remaining weekly limit (what patient can presently spend)
 @app.route("/get_remaining_weekly_limit")
@@ -105,6 +105,26 @@ def make_purchase():
     patient_query = {"username": patient}
     users.update_one(patient_query, new_limits_and_balance)
     return Response(f"{{\"status\": \"success\", \"remaining_spend_limit\": {formatted_rsl}, \"managed_balance\": {formatted_mab}}}", status=200, mimetype='application/json')
+
+@app.route("/check_for_auth")
+def check_for_auth():
+    patient = request.args.get('patient')
+    patient_record = get_patient_record(patient)
+    guardian_phone_number = patient_record["guardian_phone_number"]
+    formatted_rsl = "{:.2f}".format(patient_record["remaining_spend_limit"])
+    formatted_mab = "{:.2f}".format(patient_record["managed_account_balance"])
+
+    pending_record = get_pending_response(guardian_phone_number)
+
+    if(pending_record["status"] == "pending"):
+        return Response(f"{{\"status\": \"waiting\", \"remaining_spend_limit\": null, \"managed_balance\": null}}", status=200, mimetype='application/json')
+    elif(pending_record["status"] == "approved"):
+        return Response(f"{{\"status\": \"approved\", \"remaining_spend_limit\": {formatted_rsl}, \"managed_balance\": {formatted_mab}}}", status=200, mimetype='application/json')
+    elif(pending_record["status"] == "denied"):
+        return Response(f"{{\"status\": \"denied\", \"remaining_spend_limit\": {formatted_rsl}, \"managed_balance\": {formatted_mab}}}", status=200, mimetype='application/json')
+    else:
+        return Response("\"status\": \"we should have never gotten here..\"", status=500, mimetype='application/json')
+
 
 @app.route("/sms_authorize_response", methods=['GET', 'POST'])
 def sms_authorize_payment():

@@ -2,15 +2,16 @@ import * as React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Image, View, Touchable, TouchableWithoutFeedback, ActivityIndicator } from 'react-native';
 import { Button, Provider as PaperProvider, Text, TextInput, IconButton } from 'react-native-paper';
+const transactionAmount = 555;
 
 export default function App() {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [test, setTest] = React.useState("");
-  const [view, setView] = React.useState("patient");  // which page expo loads first
+  const [view, setView] = React.useState("login");  // which page expo loads first
 
   function loginAttempt() {
-    if (username === "sally_su") {
+    if (username === "sally_su" && password === "1234") {
       setTest("logged in as patient");
       setView("patient");
     } else if (username === "benson_lash") {
