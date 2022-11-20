@@ -7,7 +7,7 @@ export default function App() {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [test, setTest] = React.useState("");
-  const [view, setView] = React.useState("patient");  // which page expo loads first on
+  const [view, setView] = React.useState("patient");  // which page expo loads first
 
   function loginAttempt() {
     if (username === "sally_su") {
@@ -63,12 +63,12 @@ export default function App() {
 
         <View style={styles.payBox}>
         <Text variant="titleMedium" style={{ alignSelf: 'center', alignItems: 'center', color:'black', fontSize:20, fontWeight: '450', marginTop: "-2%" }}>
-          Pay your Contacts
+          Pay Online
         </Text>
         <Button mode='contained' style={{ borderRadis: '10', width: '55%', height: '70%', backgroundColor: '#c5d7c9', marginTop: "5%"}}>
           <Text variant="titleMedium" style={{ fontWeight: 'bold', color: 'white' }}> Pay Now </Text>
           </Button>
-          <IconButton color="#023020" icon="arrow-right" size={45} style={{marginTop:"-17%"}} onPress={() => {setView("login")}}/>
+          <IconButton color="#023020" icon="arrow-right" size={45} style={{marginTop:"-17%"}} onPress={() => {setView("hold")}}/>
         <Text />
       </View>
       
@@ -153,6 +153,31 @@ export default function App() {
       </View>
     </View>
 }
+
+{view == "hold" &&
+        <TouchableWithoutFeedback onPress={() => { setView("await") }}>
+          <View style={styles.Container}>
+            <Text style={{ fontWeight: 'bold', textAlign: 'center', color: "black", fontSize: "17" }} >Ready to pay? {"\n"} Hold your phone over payment terminal.</Text>
+          </View>
+        </TouchableWithoutFeedback>
+      }
+
+      {view == "await" &&
+        <TouchableWithoutFeedback onPress={() => { setView("success") }}>
+          <View style={styles.WaitContainer}>
+            <Text style={{ fontWeight: 'bold', textAlign: 'center', color: "black", fontSize: "17" }} >Awaiting Confirmation from Guardian...</Text>
+          </View>
+        </TouchableWithoutFeedback>
+      }
+
+      {view == "success" &&
+        <TouchableWithoutFeedback onPress={() => { setView("hold") }}>
+          <View style={styles.SuccessContainer}>
+            <Text style={{ fontWeight: 'bold', textAlign: 'center', color: "black", fontSize: "18" }} >Payment Successful!</Text>
+          </View>
+        </TouchableWithoutFeedback>
+      }
+
 
     </PaperProvider>
   );
@@ -357,5 +382,43 @@ const styles = StyleSheet.create({
       shadowOpacity: 0.2,
       shadowRadius: 4,
     },
+
+    //
+    Container: {
+      display: 'flex',
+      marginTop: 'auto',
+      marginBottom: 'auto',
+      paddingLeft: '10%',
+      paddingTop: '100%',
+      paddingBottom: '100%',
+      paddingRight: '10%',
+      alignItems: 'center',
+      textAlign: 'center',
+      backgroundColor: "#c5d7c9"
+    },
+    WaitContainer: {
+      display: 'flex',
+      marginTop: 'auto',
+      marginBottom: 'auto',
+      paddingLeft: '10%',
+      paddingTop: '100%',
+      paddingBottom: '100%',
+      paddingRight: '10%',
+      alignItems: 'center',
+      textAlign: 'center',
+      backgroundColor: "#9ccbb8"
+    },
+    SuccessContainer: {
+      display: 'flex',
+      marginTop: 'auto',
+      marginBottom: 'auto',
+      paddingLeft: '10%',
+      paddingTop: '100%',
+      paddingBottom: '100%',
+      paddingRight: '10%',
+      alignItems: 'center',
+      textAlign: 'center',
+      backgroundColor: "#5f967c"
+    } 
 
 });
