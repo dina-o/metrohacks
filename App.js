@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Image, View, Touchable, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Image, View, Touchable, TouchableWithoutFeedback, ActivityIndicator } from 'react-native';
 import { Button, Provider as PaperProvider, Text, TextInput, IconButton } from 'react-native-paper';
 
 export default function App() {
@@ -154,7 +154,7 @@ export default function App() {
     </View>
 }
 
-{view == "hold" &&
+    {view == "hold" &&
         <TouchableWithoutFeedback onPress={() => { setView("await") }}>
           <View style={styles.Container}>
             <Text style={{ fontWeight: 'bold', textAlign: 'center', color: "black", fontSize: "17" }} >Ready to pay? {"\n"} Hold your phone over payment terminal.</Text>
@@ -166,6 +166,7 @@ export default function App() {
         <TouchableWithoutFeedback onPress={() => { setView("success") }}>
           <View style={styles.WaitContainer}>
             <Text style={{ fontWeight: 'bold', textAlign: 'center', color: "black", fontSize: "17" }} >Awaiting Confirmation from Guardian...</Text>
+            <ActivityIndicator size="large" color='#000' style={{ margin: 25 }} />
           </View>
         </TouchableWithoutFeedback>
       }
@@ -174,6 +175,7 @@ export default function App() {
         <TouchableWithoutFeedback onPress={() => { setView("hold") }}>
           <View style={styles.SuccessContainer}>
             <Text style={{ fontWeight: 'bold', textAlign: 'center', color: "black", fontSize: "18" }} >Payment Successful!</Text>
+            <IconButton color="#000" icon="check" size={45} style={{marginTop:"10%"}}/>
           </View>
         </TouchableWithoutFeedback>
       }
@@ -389,8 +391,8 @@ const styles = StyleSheet.create({
       marginTop: 'auto',
       marginBottom: 'auto',
       paddingLeft: '10%',
-      paddingTop: '100%',
-      paddingBottom: '100%',
+      paddingTop: '103%',
+      paddingBottom: '103%',
       paddingRight: '10%',
       alignItems: 'center',
       textAlign: 'center',
@@ -413,7 +415,7 @@ const styles = StyleSheet.create({
       marginTop: 'auto',
       marginBottom: 'auto',
       paddingLeft: '10%',
-      paddingTop: '100%',
+      paddingTop: '110%',
       paddingBottom: '100%',
       paddingRight: '10%',
       alignItems: 'center',
