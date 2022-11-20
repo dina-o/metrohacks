@@ -134,7 +134,7 @@ def sms_authorize_payment():
         new_balance = { "$set": {"managed_account_balance": managed_account_balance - price} }
         users.update_one(patient_query, new_balance)
     elif body == 'NO':
-        update_pending_response_status(sender, "declined")
+        update_pending_response_status(sender, "rejected")
     return
 
 # gets patient record from database
